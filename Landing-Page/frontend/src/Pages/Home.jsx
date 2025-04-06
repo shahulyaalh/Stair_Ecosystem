@@ -1,10 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaLeaf, FaSolarPanel, FaBolt, FaUsers } from "react-icons/fa";
+import Magnet from "../components/Shared/MagnetButton";
+import Lanyard from "../components/Shared/Lanyard";
 
 const Home = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
+      {/* <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} /> */}
       {/* Hero Section */}
       <div
         className="relative bg-cover bg-center h-[90vh]"
@@ -28,15 +31,14 @@ const Home = () => {
             Stair Ecosystem provides high-quality solar energy solutions for
             homes and businesses.
           </motion.p>
-          <motion.a
-            href="#products"
-            className="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-          >
-            Explore Products
-          </motion.a>
+
+          <div className="mt-8">
+            <Magnet padding={80} disabled={false} magnetStrength={60}>
+              <p className="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-4 rounded-xl text-lg font-semibold shadow-lg">
+                Explore Products
+              </p>
+            </Magnet>
+          </div>
         </div>
       </div>
 
