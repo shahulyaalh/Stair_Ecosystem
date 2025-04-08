@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { LampDemo } from "../ui/lamp";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);

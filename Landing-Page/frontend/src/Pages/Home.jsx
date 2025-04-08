@@ -3,10 +3,12 @@ import { motion } from "framer-motion";
 import { FaLeaf, FaSolarPanel, FaBolt, FaUsers } from "react-icons/fa";
 import Magnet from "../components/Shared/MagnetButton";
 import Lanyard from "../components/Shared/Lanyard";
+import { LampDemo } from "../components/ui/lamp";
 
 const Home = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
+      <LampDemo />
       {/* <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} /> */}
       {/* Hero Section */}
       <div

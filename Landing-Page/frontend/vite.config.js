@@ -1,9 +1,14 @@
 import { defineConfig } from "vite";
-import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import path from "path"; // ✅ import path module
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  assetsInclude: ["**/*.glb"], // 👈 Add this line to include .glb files
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"), // ✅ This line allows @ to map to /src
+    },
+  },
+  assetsInclude: ["**/*.glb"],
 });
