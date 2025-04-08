@@ -1,12 +1,13 @@
-// server.js
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const Admin = require("./models/admin");
-const path = require("path");
 const multer = require("multer");
+const path = require("path");
+const nodemailer = require("nodemailer");
+
+const Admin = require("./models/admin");
 const Activity = require("./models/activity");
 
 const app = express();
@@ -15,7 +16,7 @@ app.use(express.json());
 
 const JWT_SECRET = "your_super_secret_key";
 
-// Use modern Mongoose connection without deprecated options
+// MongoDB Connection
 mongoose
   .connect("mongodb://127.0.0.1:27017/stair-ecosystem")
   .then(() => {
@@ -24,7 +25,7 @@ mongoose
   })
   .catch((err) => console.error("MongoDB connection error:", err));
 
-// Initialize one admin if none exists
+// Initialize default admin if none exists
 const initAdmin = async () => {
   try {
     const existingAdmin = await Admin.findOne({ email: "admin@stair.com" });
@@ -41,6 +42,7 @@ const initAdmin = async () => {
   }
 };
 
+// Admin login route
 app.post("/api/admin/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -62,10 +64,10 @@ app.post("/api/admin/login", async (req, res) => {
   }
 });
 
+// JWT Middleware
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader?.split(" ")[1];
-
   if (!token) return res.sendStatus(401);
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
@@ -79,10 +81,10 @@ app.get("/api/admin/dashboard", verifyToken, (req, res) => {
   res.json({ message: "Welcome to the admin dashboard!" });
 });
 
-// Serve static images
+// Serve static files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Multer storage setup for activity image uploads
+// Multer storage config
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -91,10 +93,9 @@ const storage = multer.diskStorage({
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
-
 const upload = multer({ storage });
 
-// Upload activity route
+// Upload Activity
 app.post("/api/activities/upload", upload.single("image"), async (req, res) => {
   const { title, description } = req.body;
   const imageUrl = req.file ? `/uploads/${req.file.filename}` : "";
@@ -108,7 +109,7 @@ app.post("/api/activities/upload", upload.single("image"), async (req, res) => {
   }
 });
 
-// Get all activities
+// Get Activities
 app.get("/api/activities", async (req, res) => {
   try {
     const activities = await Activity.find().sort({ createdAt: -1 });
@@ -118,4 +119,36 @@ app.get("/api/activities", async (req, res) => {
   }
 });
 
-app.listen(5000, () => console.log("Server running on http://localhost:5000"));
+// Contact Form Email (Nodemailer)
+app.post("/api/send-email", async (req, res) => {
+  const { name, email, message } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "shahulyaalh@gmail.com", // Replace with your email
+      pass: "owwe ilvv oxag joew", // Replace with App Password
+    },
+  });
+
+  const mailOptions = {
+    from: email,
+    to: "shahulyaalh@gmail.com", // Your email to receive messages
+    subject: `New Message from ${name}`,
+    text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res
+      .status(200)
+      .json({ success: true, message: "Email sent successfully!" });
+  } catch (error) {
+    console.error("Email error:", error);
+    res.status(500).json({ success: false, message: "Failed to send email." });
+  }
+});
+
+app.listen(5000, () =>
+  console.log("🚀 Server running on http://localhost:5000")
+);

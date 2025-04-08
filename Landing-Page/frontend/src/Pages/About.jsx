@@ -1,23 +1,24 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { TimelineDemo } from "../components/Shared/TimelineDemo";
 
 const About = () => {
   return (
-    <div className="bg-gray-100 min-h-screen pt-20 pb-10">
+    <div className="bg-gray-100 min-h-screen pt-0 pb-0">
       {/* Section Container */}
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Heading */}
-        <motion.h1
+      {/* <div className="max-w-7xl mx-auto px-6"> */}
+      {/* Heading */}
+      {/* <motion.h1
           className="text-4xl font-bold text-center text-blue-700 mb-6"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           About Stair Ecosystem
-        </motion.h1>
+        </motion.h1> */}
 
-        {/* Mission Statement */}
-        <motion.p
+      {/* Mission Statement */}
+      {/* <motion.p
           className="text-gray-700 text-center max-w-3xl mx-auto leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -28,15 +29,15 @@ const About = () => {
           we are committed to revolutionizing renewable energy solutions. Our
           goal is to make solar energy accessible, efficient, and affordable for
           everyone.
-        </motion.p>
+        </motion.p> */}
 
-        {/* Milestones Timeline */}
-        <div className="mt-12 space-y-8">
-          <h2 className="text-3xl font-semibold text-center text-blue-600">
+      {/* Milestones Timeline */}
+      {/* <div className="mt-12 space-y-8"> */}
+      {/* <h2 className="text-3xl font-semibold text-center text-blue-600">
             Our Journey
-          </h2>
+          </h2> */}
 
-          <div className="relative border-l-4 border-blue-600 pl-6 space-y-6">
+      {/* <div className="relative border-l-4 border-blue-600 pl-6 space-y-6">
             <motion.div
               className="bg-white p-5 rounded-lg shadow-md"
               initial={{ opacity: 0, x: -50 }}
@@ -79,11 +80,11 @@ const About = () => {
                 We launched smart solar solutions with IoT-based monitoring.
               </p>
             </motion.div>
-          </div>
-        </div>
+          </div> */}
+      {/* </div> */}
 
-        {/* Why Choose Us Section */}
-        <div className="mt-16">
+      {/* Why Choose Us Section */}
+      {/* <div className="mt-16">
           <h2 className="text-3xl font-semibold text-center text-blue-600">
             Why Choose Us?
           </h2>
@@ -116,8 +117,9 @@ const About = () => {
               </motion.div>
             ))}
           </div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
+      <TimelineDemo />
     </div>
   );
 };

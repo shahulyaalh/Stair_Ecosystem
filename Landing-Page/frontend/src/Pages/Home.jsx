@@ -4,6 +4,9 @@ import { FaLeaf, FaSolarPanel, FaBolt, FaUsers } from "react-icons/fa";
 import Magnet from "../components/Shared/MagnetButton";
 import Lanyard from "../components/Shared/Lanyard";
 import { LampDemo } from "../components/ui/lamp";
+import Contact from "./Contact";
+import { InfiniteMovingCardsDemo } from "../components/Shared/InfiniteMovingCardsDemo";
+import Products from "./Products";
 
 const Home = () => {
   return (
@@ -54,7 +57,7 @@ const Home = () => {
       </section>
 
       {/* Product Showcase */}
-      <section id="products" className="py-16 bg-gray-200 text-center">
+      {/* <section id="products" className="py-16 bg-gray-200 text-center">
         <h2 className="text-4xl font-bold text-blue-700">Our Products</h2>
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-8">
           {[
@@ -80,7 +83,8 @@ const Home = () => {
             </motion.div>
           ))}
         </div>
-      </section>
+      </section> */}
+      <Products />
 
       {/* Why Choose Us */}
       <section className="py-16 bg-white text-center">
@@ -126,7 +130,7 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-gray-200 text-center">
+      {/* <section className="py-16 bg-gray-200 text-center">
         <h2 className="text-4xl font-bold text-blue-700">
           What Our Customers Say
         </h2>
@@ -156,11 +160,13 @@ const Home = () => {
             </motion.div>
           ))}
         </div>
-      </section>
+      </section> */}
+      <InfiniteMovingCardsDemo />
+      <Contact />
 
       {/* Contact Section */}
 
-      <section className="py-6 bg-gray-100 text-gray-900">
+      {/* <section className="py-6 bg-gray-100 text-gray-900">
         <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
           <div className="py-6 md:py-0 md:px-6">
             <h1 className="text-4xl font-bold">Get in touch</h1>
@@ -243,7 +249,7 @@ const Home = () => {
             </button>
           </form>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

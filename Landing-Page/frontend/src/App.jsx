@@ -22,6 +22,7 @@ import LogoLoader from "./components/ui/Intro/LogoLoader"; // 🚀 Initial loade
 
 import "./index.css";
 import "./App.css";
+import ProductDetail from "./Pages/ProductDetail";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("adminToken");
@@ -47,6 +48,7 @@ const AppContent = () => {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route
@@ -58,7 +60,7 @@ const AppContent = () => {
           }
         />
       </Routes>
-      <div className="pt-10">
+      <div>
         <Footer />
       </div>
     </div>

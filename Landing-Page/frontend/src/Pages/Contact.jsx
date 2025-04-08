@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -7,97 +8,111 @@ const Contact = () => {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(
-      `Message Sent! ✅\nName: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`
-    );
-    setFormData({ name: "", email: "", message: "" }); // Reset form
+    setLoading(true);
+
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/send-email",
+        formData
+      );
+      if (res.data.success) {
+        alert("Message Sent ✅\nWe'll get back to you shortly!");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        alert("Failed to send message ❌");
+      }
+    } catch (err) {
+      console.error("Email Error:", err);
+      alert("Something went wrong. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <section className="py-6 bg-gray-100 text-gray-900">
-      <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
-        <div className="py-6 md:py-0 md:px-6">
-          <h1 className="text-4xl font-bold">Get in touch</h1>
-          <p className="pt-2 pb-4">Fill in the form to start a conversation</p>
-          <div className="space-y-4">
-            <p className="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="w-5 h-5 mr-2 sm:mr-6"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-              <span>Fake address, 9999 City</span>
+    <section className="min-h-screen bg-[#0f172a] flex items-center justify-center py-10 px-4">
+      <div className="max-w-5xl w-full bg-[#1e293b] text-white shadow-xl rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+        {/* Left Section - Info */}
+        <div className="bg-[#0f172a] text-white p-10 flex flex-col justify-between">
+          <div>
+            <h2 className="text-4xl font-bold mb-4">Get in Touch</h2>
+            <p className="text-sm mb-8 text-gray-300">
+              We'd love to hear from you. Fill out the form and our team will
+              get back to you as soon as possible.
             </p>
-            <p className="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="w-5 h-5 mr-2 sm:mr-6"
-              >
-                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-              </svg>
-              <span>123456789</span>
-            </p>
-            <p className="flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="w-5 h-5 mr-2 sm:mr-6"
-              >
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-              </svg>
-              <span>contact@business.com</span>
-            </p>
+            <ul className="space-y-4 text-sm text-gray-300">
+              <li className="flex items-center gap-2">
+                📍 Fake address, 9999 City
+              </li>
+              <li className="flex items-center gap-2">📞 123456789</li>
+              <li className="flex items-center gap-2">
+                📧 contact@business.com
+              </li>
+            </ul>
           </div>
+          <p className="text-xs mt-10 text-gray-400">
+            &copy; 2025 Stair Ecosystem Pvt. Ltd
+          </p>
         </div>
-        <form
-          noValidate=""
-          className="flex flex-col py-6 space-y-6 md:py-0 md:px-6"
-        >
-          <label className="block">
-            <span className="mb-1">Full name</span>
+
+        {/* Right Section - Form */}
+        <form onSubmit={handleSubmit} className="p-10 space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-200 mb-1">
+              Full Name
+            </label>
             <input
               type="text"
-              placeholder="Leroy Jenkins"
-              className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 bg-gray-100 focus:ring-violet-600"
+              name="name"
+              placeholder="Your name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-600 bg-[#0f172a] text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
-          </label>
-          <label className="block">
-            <span className="mb-1">Email address</span>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-200 mb-1">
+              Email Address
+            </label>
             <input
               type="email"
-              placeholder="leroy@jenkins.com"
-              className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 bg-gray-100 focus:ring-violet-600"
+              name="email"
+              placeholder="you@example.com"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-600 bg-[#0f172a] text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
-          </label>
-          <label className="block">
-            <span className="mb-1">Message</span>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-200 mb-1">
+              Message
+            </label>
             <textarea
-              rows="3"
-              className="block w-full rounded-md focus:ring focus:ring-opacity-75 bg-gray-100 focus:ring-violet-600"
-            ></textarea>
-          </label>
+              name="message"
+              rows="4"
+              placeholder="Type your message..."
+              value={formData.message}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-600 bg-[#0f172a] text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
           <button
-            type="button"
-            className="self-center px-8 py-3 text-lg rounded focus:ring hover:ring focus:ring-opacity-75 text-gray-50 bg-violet-600 focus:ring-violet-600 hover:ring-violet-600"
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 text-lg font-medium text-white bg-blue-700 rounded-md hover:bg-blue-800 transition duration-200"
           >
-            Submit
+            {loading ? "Sending..." : "Send Message"}
           </button>
         </form>
       </div>

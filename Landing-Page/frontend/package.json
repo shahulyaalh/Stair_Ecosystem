@@ -16,6 +16,7 @@
     "@react-three/drei": "^10.0.6",
     "@react-three/fiber": "^9.1.2",
     "@react-three/rapier": "^2.1.0",
+    "@tabler/icons-react": "^3.31.0",
     "axios": "^1.8.4",
     "clsx": "^2.1.1",
     "framer-motion": "^12.5.0",
